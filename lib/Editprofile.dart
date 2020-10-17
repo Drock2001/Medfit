@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:medfit/Profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slider_button/slider_button.dart';
 class Editprofile extends StatefulWidget {
@@ -192,7 +193,8 @@ class _EditprofileState extends State<Editprofile> {
                   "bmi" : bmi,
                   "bmr" : bmr,
                 }).catchError((onError){print("error in update");});
-                Navigator.of(context).pop();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Profile()));
               },
               label: Text(
                 "Update Data!!",

@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medfit/calorie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
@@ -388,7 +389,8 @@ class _CalorieCalculatorState extends State<CalorieCalculator> {
         backgroundColor: Colors.green[700],
         onPressed: (){
           calc();
-          Navigator.pop(context);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Calorie()));
         },
       ),
     );

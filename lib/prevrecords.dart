@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
+import 'package:medfit/calorie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrevRecords extends StatefulWidget {
@@ -26,14 +27,22 @@ class _PrevRecordsState extends State<PrevRecords> {
     final DateTime now = DateTime.now();
     datenow = DateFormat('yyyy-MM-dd').format(now);
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    userId = sharedPreferences.getString('id');
+    setState(() {
+      userId = sharedPreferences.getString('id');
+    });
+
   }
 
   @override
   Widget build(BuildContext context) {
+    getUserId();
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          leading: MaterialButton(onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Calorie()));
+          },color: Colors.transparent,child: Icon(Icons.arrow_back,color: Colors.white,)),
           backgroundColor: Colors.black,
           title: Text("Your Previous Records"),
         ),

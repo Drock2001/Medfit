@@ -24,6 +24,10 @@ class _CalorieState extends State<Calorie> {
   String name= " ";
   String datenow = " ";
   String cal = " ";
+  bool New = true;
+  DocumentSnapshot calc;
+
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   @override
   void initState() {
     getUserId();
@@ -31,6 +35,8 @@ class _CalorieState extends State<Calorie> {
   }
 
   getUserId() async {
+    Dialogs.showLoadingDialog(context, _keyLoader);
+
     final DateTime now = DateTime.now();
     datenow = DateFormat('yyyy-MM-dd').format(now);
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -41,22 +47,35 @@ class _CalorieState extends State<Calorie> {
       name = variable.data()['name'];
       bmr = variable.data()['bmr'];
     });
-    DocumentSnapshot vard = await FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').doc(datenow).get();
-    //final res = (await FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').where('id', isEqualTo: datenow).get()).docs;
-    if(vard.data()["id"].isEmpty){
-      FirebaseFirestore.instance.collection('users').doc(userId).collection(
-          'calories').doc(datenow).set({
+    //DocumentSnapshot vard = await FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').doc(datenow).get();
+    /*
+    if(vard.data()["id"].isnotEmpty){
+      setState(() {
+        New = false;
+      });
+    }
+
+     */
+    final res = (await FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').where('id', isEqualTo: datenow).get()).docs;
+    print(res.length);
+    if(res.length == 0){
+      FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').doc(datenow).set({
         'id': datenow.toString(),
         'cal': "0",
       });
     }
-
+    documenter();
+    Navigator.of(_keyLoader.currentContext,rootNavigator: true).pop();
+  }
+  documenter() async{
+    DocumentSnapshot vard = await FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').doc(datenow).get();
     setState(() {
       cal = vard.data()["cal"];
     });
   }
   @override
   Widget build(BuildContext context) {
+    documenter();
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
@@ -76,7 +95,7 @@ class _CalorieState extends State<Calorie> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 20,),
-              Text("Hi " + name,style: TextStyle(color: Colors.white, fontSize: 24),),
+              Text("Hi, " + name,style: TextStyle(color: Colors.white, fontSize: 24),),
               SizedBox(height: 30,),
               Text("The Table shown down below is just for choose calories intake according to your exercise routine!!",
                 style: TextStyle(color: Colors.white, fontSize: 20),
@@ -292,5 +311,30 @@ class NavDrawer extends StatelessWidget {
       ),
       (route) => false,
     );
+  }
+}
+
+class Dialogs {
+  static Future<void> showLoadingDialog(
+      BuildContext context, GlobalKey key) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new WillPopScope(
+              onWillPop: () async => false,
+              child: SimpleDialog(
+                  key: key,
+                  backgroundColor: Colors.black54,
+                  children: <Widget>[
+                    Center(
+                      child: Column(children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 10,),
+                        Text("Please Wait....",style: TextStyle(color: Colors.green),)
+                      ]),
+                    )
+                  ]));
+        });
   }
 }
