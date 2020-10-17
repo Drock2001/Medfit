@@ -40,16 +40,16 @@ class _CalorieState extends State<Calorie> {
       name = variable.data()['name'];
       bmr = variable.data()['bmr'];
     });
-    DocumentSnapshot res = await FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').doc(datenow).get();
-    String result = res.data()["id"];
-    if(result.isEmpty){
+    DocumentSnapshot vard = await FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').doc(datenow).get();
+    //final res = (await FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').where('id', isEqualTo: datenow).get()).docs;
+    if(vard.data()["id"].isEmpty){
       FirebaseFirestore.instance.collection('users').doc(userId).collection(
           'calories').doc(datenow).set({
         'id': datenow.toString(),
         'cal': "0",
       });
     }
-    DocumentSnapshot vard = await FirebaseFirestore.instance.collection('users').doc(userId).collection('calories').doc(datenow).get();
+
     setState(() {
       cal = vard.data()["cal"];
     });
@@ -131,7 +131,7 @@ class _CalorieState extends State<Calorie> {
                 ),
               ),
               SizedBox(height: 20,),
-              Text("Today's Calorie Intake: " + cal + " cal",style: TextStyle(color: Colors.white, fontSize: 22),),
+              Text("Today's Calorie Intake: " + calchecker() + " cal",style: TextStyle(color: Colors.white, fontSize: 22),),
               SizedBox(height: 30,),
               MaterialButton(onPressed: (){
                 Navigator.push(context,
@@ -185,6 +185,14 @@ class _CalorieState extends State<Calorie> {
         ),
       ),
     );
+  }
+  calchecker() {
+    if(cal.isEmpty){
+      return "0";
+    }
+    else {
+        return cal;
+      }
   }
   calorieintake(value) {
     double cal = roundDouble(double.parse(bmr) * value, 2);
