@@ -48,7 +48,8 @@ class _RegistrationState extends State<Registration> {
       userId = sharedPreferences.getString('id');
       name = sharedPreferences.getString('name');
     });
-    bool userLoggedIn = (sharedPreferences.getString('id')??'').isNotEmpty;
+    DocumentSnapshot variable = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    bool userLoggedIn = (variable.data()["age"]??'').isNotEmpty;
 
     if(userLoggedIn){
       Navigator.push(context,
