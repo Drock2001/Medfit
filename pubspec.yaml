@@ -47,6 +47,7 @@ dependencies:
   firebase_storage:
   image_cropper:
   intl:
+  slider_button:
 
 dev_dependencies:
   flutter_test:

@@ -8,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:medfit/discover.dart';
 import 'package:medfit/signincontroller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:slider_button/slider_button.dart';
 
 import 'main.dart';
 
@@ -50,8 +51,8 @@ class _RegistrationState extends State<Registration> {
     bool userLoggedIn = (sharedPreferences.getString('id')??'').isNotEmpty;
 
     if(userLoggedIn){
-      //Navigator.push(context,
-        //MaterialPageRoute(builder: (context) => Discover()));
+      Navigator.push(context,
+        MaterialPageRoute(builder: (context) => Discover()));
     }
   }
     @override
@@ -221,8 +222,10 @@ class _RegistrationState extends State<Registration> {
                     SizedBox(
                       height: 20,
                     ),
-                    MaterialButton(
-                      onPressed: () async {
+
+                    Center(child: SliderButton(
+                      action: () {
+                        ///Do something here
                         if(ageController.text.isEmpty  || genderController.text.isEmpty|| weightController.text.isEmpty || heightController.text.isEmpty || fitnessController.text.isEmpty){
                           print("empty");
                           return;
@@ -242,27 +245,14 @@ class _RegistrationState extends State<Registration> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Discover()));
                       },
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
+                      label: Text(
+                        "Register",
+                        style: TextStyle(
+                            color: Color(0xff4a4a4a), fontWeight: FontWeight.w500, fontSize: 17),
                       ),
-                      elevation: 5,
-                      height: 50,
-                      child: Container(
-                        width: 150,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(FontAwesomeIcons.userFriends),
-                            SizedBox(width: 20),
-                            Text('Register',
-                              style: TextStyle(fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                      icon: Icon(Icons.add, size: 30,),
+
+                    )),
                   ],
                 ),
             ),

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
+import 'package:medfit/Profile.dart';
 import 'package:medfit/caloriecalculator.dart';
 import 'package:medfit/discover.dart';
 import 'package:medfit/main.dart';
@@ -259,7 +260,8 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.person),
             title: Text('Profile'),
-            onTap: () => {},
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Profile())),
           ),
           ListTile(
             leading: Icon(Icons.calculate),

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:medfit/Profile.dart';
 import 'package:medfit/calorie.dart';
 import 'package:medfit/caloriecalculator.dart';
 import 'package:medfit/discover.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
 
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Calorie(),
+      home: MyHomePage(),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:medfit/Profile.dart';
 import 'package:medfit/addpost.dart';
+import 'package:medfit/calorie.dart';
 import 'package:medfit/main.dart';
 import 'package:medfit/postclass.dart';
 import 'package:medfit/postservice.dart';
@@ -244,7 +245,8 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.calculate),
             title: Text('Calorie meter'),
-            onTap: () => {},
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Calorie())),
           ),
           ListTile(
             leading: Icon(Icons.work),

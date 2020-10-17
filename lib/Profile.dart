@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:medfit/Editprofile.dart';
+import 'package:medfit/calorie.dart';
 import 'package:medfit/discover.dart';
 import 'package:medfit/main.dart';
 import 'package:medfit/signincontroller.dart';
@@ -60,7 +62,10 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Colors.black,
         shadowColor: Colors.green[800],
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.edit), onPressed: () {}),
+          IconButton(icon: Icon(Icons.edit), onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Editprofile()));
+          }),
         ],
       ),
       body: Container(
@@ -268,7 +273,8 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.calculate),
             title: Text('Calorie meter'),
-            onTap: () => {},
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Calorie())),
           ),
           ListTile(
             leading: Icon(Icons.work),
